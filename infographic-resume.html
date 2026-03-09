@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Abhay Pratap Singh | Professional Resume</title>
+  <style>
+    :root {
+      --bg: #060b1a;
+      --bg-2: #0f172a;
+      --surface: rgba(13, 25, 50, 0.82);
+      --surface-2: rgba(16, 30, 58, 0.92);
+      --border: rgba(148, 163, 184, 0.22);
+      --text: #e5efff;
+      --muted: #9db1d2;
+      --accent: #38bdf8;
+      --accent-2: #22d3ee;
+      --success: #34d399;
+      --shadow: 0 22px 50px rgba(3, 8, 23, 0.45);
+    }
+
+    body.light {
+      --bg: #f5f8ff;
+      --bg-2: #eaf2ff;
+      --surface: rgba(255, 255, 255, 0.86);
+      --surface-2: rgba(255, 255, 255, 0.95);
+      --border: rgba(71, 85, 105, 0.22);
+      --text: #122236;
+      --muted: #3f556f;
+      --accent: #0284c7;
+      --accent-2: #0891b2;
+      --success: #059669;
+      --shadow: 0 18px 36px rgba(2, 27, 65, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+
+    body {
+      min-height: 100vh;
+      font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 8% -12%, #1d4ed8 0%, transparent 28%),
+        radial-gradient(circle at 100% 0%, #0ea5e9 0%, transparent 26%),
+        linear-gradient(135deg, var(--bg) 0%, var(--bg-2) 100%);
+      padding: 24px 16px 42px;
+      transition: background .35s ease, color .3s ease;
+    }
+
+    .container { width: min(1100px, 100%); margin: 0 auto; display: grid; gap: 16px; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transform: translateY(14px);
+      opacity: 0;
+      transition: transform .55s ease, opacity .55s ease, border-color .24s ease;
+    }
+
+    .card.visible { transform: translateY(0); opacity: 1; }
+    .card:hover { border-color: rgba(56, 189, 248, .52); }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 4px;
+    }
+
+    .brand { font-size: .86rem; color: var(--muted); letter-spacing: .35px; }
+
+    .theme-btn {
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      color: var(--text);
+      border-radius: 10px;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 84px 1fr auto;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .avatar {
+      width: 84px; height: 84px; border-radius: 18px;
+      display: grid; place-items: center;
+      font-size: 1.7rem; font-weight: 800;
+      color: #021225;
+      background: linear-gradient(140deg, var(--accent), var(--accent-2));
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,.25);
+    }
+
+    h1 { margin: 0; font-size: clamp(1.5rem, 2.8vw, 2.1rem); }
+    .subtitle { margin: 5px 0 0; color: var(--muted); }
+
+    .pills { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+    .pill {
+      border-radius: 999px; padding: 8px 11px; font-size: .82rem;
+      color: #c9f3ff; border: 1px solid rgba(56, 189, 248, .45);
+      background: rgba(56, 189, 248, .12);
+    }
+
+    .grid { display: grid; grid-template-columns: 1.06fr 1fr; gap: 16px; }
+    h2 { margin: 0 0 12px; font-size: 1.05rem; color: #bdeaff; }
+    body.light h2 { color: #0b5f93; }
+
+    .timeline { list-style: none; margin: 0; padding: 0 0 0 13px; border-left: 2px solid rgba(56,189,248,.35); display: grid; gap: 12px; }
+    .timeline li { position: relative; color: var(--muted); padding-left: 12px; line-height: 1.4; }
+    .timeline li::before {
+      content: ""; position: absolute; left: -21px; top: 6px; width: 10px; height: 10px; border-radius: 50%;
+      background: linear-gradient(180deg, var(--accent), var(--accent-2));
+    }
+
+    .bars { display: grid; gap: 10px; }
+    .bar { border: 1px solid var(--border); border-radius: 10px; padding: 9px 11px; background: rgba(148,163,184,.08); }
+    .bar-head { display: flex; justify-content: space-between; font-size: .9rem; margin-bottom: 7px; }
+    .meter { height: 8px; border-radius: 999px; overflow: hidden; background: rgba(255,255,255,.1); }
+    .fill {
+      width: 0;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      transition: width 1s ease;
+    }
+
+    .filter-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .filter {
+      border: 1px solid var(--border); background: transparent; color: var(--text);
+      padding: 7px 10px; border-radius: 9px; cursor: pointer; font-size: .82rem;
+    }
+    .filter.active { background: rgba(56, 189, 248, .16); border-color: rgba(56, 189, 248, .58); }
+
+    .project-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+    .project {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 11px;
+      background: rgba(148,163,184,.06);
+    }
+    .project small { color: var(--muted); }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 7px; }
+    .tag { font-size: .8rem; border: 1px solid rgba(34, 211, 238, .32); background: rgba(34,211,238,.12); color: #d6fbff; padding: 6px 9px; border-radius: 9px; }
+
+    .stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 9px; }
+    .stat {
+      border: 1px solid rgba(16, 185, 129, .38);
+      background: rgba(16, 185, 129, .08);
+      border-radius: 12px;
+      text-align: center;
+      padding: 10px 8px;
+    }
+    .num { font-size: 1.18rem; font-weight: 800; color: #ccfbf1; }
+    body.light .num { color: #047857; }
+    .stat span { display: block; color: var(--muted); font-size: .8rem; margin-top: 4px; }
+
+    ul.clean { margin: 0; padding-left: 20px; color: var(--muted); display: grid; gap: 7px; }
+
+    .footnote { color: var(--muted); font-size: .78rem; text-align: center; padding: 8px 0 0; }
+
+    @media (max-width: 900px) {
+      .grid { grid-template-columns: 1fr; }
+      .hero { grid-template-columns: 72px 1fr; }
+      .pills { grid-column: 1 / -1; justify-content: flex-start; }
+    }
+
+    @media (max-width: 560px) {
+      .stats { grid-template-columns: 1fr; }
+      .container { gap: 12px; }
+      .card { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <div class="topbar">
+      <div class="brand">PROFESSIONAL INFOGRAPHIC RESUME</div>
+      <button id="themeToggle" class="theme-btn" type="button" aria-label="Toggle theme">🌙 Dark</button>
+    </div>
+
+    <section class="card hero">
+      <div class="avatar" aria-hidden="true">AP</div>
+      <div>
+        <h1>Abhay Pratap Singh</h1>
+        <p class="subtitle">B.Tech CSE Student • Full Stack Developer • Data Enthusiast</p>
+      </div>
+      <div class="pills">
+        <span class="pill">📍 Greater Noida</span>
+        <span class="pill">🎯 2026 Graduate</span>
+        <span class="pill">💡 Problem Solver</span>
+      </div>
+    </section>
+
+    <div class="grid">
+      <section class="card">
+        <h2>Education</h2>
+        <ul class="timeline">
+          <li><strong>B.Tech CSE — NIET Greater Noida</strong><br>2022–2026 • CGPA: 7.0</li>
+          <li><strong>Class 12</strong><br>83%</li>
+          <li><strong>Class 10</strong><br>87%</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>Core Skills</h2>
+        <div class="bars">
+          <div class="bar"><div class="bar-head"><span>Java</span><span>85%</span></div><div class="meter"><span class="fill" data-level="85"></span></div></div>
+          <div class="bar"><div class="bar-head"><span>SQL</span><span>82%</span></div><div class="meter"><span class="fill" data-level="82"></span></div></div>
+          <div class="bar"><div class="bar-head"><span>JavaScript</span><span>78%</span></div><div class="meter"><span class="fill" data-level="78"></span></div></div>
+          <div class="bar"><div class="bar-head"><span>React + Flask</span><span>75%</span></div><div class="meter"><span class="fill" data-level="75"></span></div></div>
+        </div>
+      </section>
+    </div>
+
+    <div class="grid">
+      <section class="card">
+        <h2>Projects</h2>
+        <div class="filter-row" role="group" aria-label="Project filter">
+          <button class="filter active" data-filter="all" type="button">All</button>
+          <button class="filter" data-filter="backend" type="button">Backend</button>
+          <button class="filter" data-filter="analytics" type="button">Analytics</button>
+          <button class="filter" data-filter="frontend" type="button">Frontend</button>
+        </div>
+        <ul class="project-list" id="projectList">
+          <li class="project" data-type="backend"><strong>Hospital Appointment Scheduling System</strong><br><small>Java, SQL, HTML, CSS</small></li>
+          <li class="project" data-type="analytics"><strong>Sales Dashboard</strong><br><small>Power BI, SQL, Excel</small></li>
+          <li class="project" data-type="frontend"><strong>Portfolio Website</strong><br><small>HTML, CSS, JavaScript</small></li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>Developer Tools & Technologies</h2>
+        <div class="tags">
+          <span class="tag">Git</span>
+          <span class="tag">Power BI</span>
+          <span class="tag">Excel</span>
+          <span class="tag">VS Code</span>
+          <span class="tag">PyCharm</span>
+          <span class="tag">IntelliJ</span>
+          <span class="tag">TensorFlow</span>
+          <span class="tag">Docker</span>
+        </div>
+      </section>
+    </div>
+
+    <div class="grid">
+      <section class="card">
+        <h2>Achievements</h2>
+        <div class="stats">
+          <div class="stat"><div class="num" data-count="100" data-suffix="+">0</div><span>LeetCode Problems</span></div>
+          <div class="stat"><div class="num" data-count="10" data-prefix="Top ">0</div><span>Coding Competition</span></div>
+          <div class="stat"><div class="num" data-count="15" data-prefix="Top " data-suffix="%">0</div><span>Department Hackathon</span></div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Certifications</h2>
+        <ul class="clean">
+          <li>IBM NLP</li>
+          <li>IBM Data Analysis with Python</li>
+          <li>Infosys Java Programming</li>
+          <li>Microsoft AI Skills Challenge</li>
+        </ul>
+      </section>
+    </div>
+
+    <div class="footnote">Designed to be ATS-readable while maintaining a strong visual presentation.</div>
+  </main>
+
+  <script>
+    const cards = document.querySelectorAll('.card');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.18 });
+    cards.forEach((card) => observer.observe(card));
+
+    const fills = document.querySelectorAll('.fill');
+    const skillObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.style.width = `${entry.target.dataset.level}%`;
+          skillObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    fills.forEach((fill) => skillObserver.observe(fill));
+
+    const nums = document.querySelectorAll('.num');
+    const runCounter = (el) => {
+      const target = Number(el.dataset.count || 0);
+      const prefix = el.dataset.prefix || '';
+      const suffix = el.dataset.suffix || '';
+      const duration = 900;
+      const start = performance.now();
+      const step = (now) => {
+        const progress = Math.min((now - start) / duration, 1);
+        const value = Math.floor(progress * target);
+        el.textContent = `${prefix}${value}${suffix}`;
+        if (progress < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
+
+    const statObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          runCounter(entry.target);
+          statObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.8 });
+    nums.forEach((num) => statObserver.observe(num));
+
+    const filters = document.querySelectorAll('.filter');
+    const projects = document.querySelectorAll('.project');
+    filters.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        filters.forEach((f) => f.classList.remove('active'));
+        btn.classList.add('active');
+        const chosen = btn.dataset.filter;
+        projects.forEach((project) => {
+          const show = chosen === 'all' || project.dataset.type === chosen;
+          project.style.display = show ? 'block' : 'none';
+        });
+      });
+    });
+
+    const toggle = document.getElementById('themeToggle');
+    toggle.addEventListener('click', () => {
+      document.body.classList.toggle('light');
+      const light = document.body.classList.contains('light');
+      toggle.textContent = light ? '☀️ Light' : '🌙 Dark';
+    });
+  </script>
+</body>
+</html>
