@@ -6,15 +6,15 @@
   <title>Temperature Converter</title>
   <style>
     :root {
-      --bg-1: #0f172a;
-      --bg-2: #1d4ed8;
+      --bg-1: #020617;
+      --bg-2: #1e3a8a;
       --card: rgba(15, 23, 42, 0.82);
-      --field-bg: rgba(255, 255, 255, 0.08);
+      --surface: rgba(255, 255, 255, 0.08);
       --text: #e2e8f0;
       --muted: #94a3b8;
       --accent: #22d3ee;
-      --accent-2: #14b8a6;
-      --ring: rgba(34, 211, 238, 0.35);
+      --ring: rgba(34, 211, 238, 0.34);
+      --danger: #f87171;
     }
 
     * {
@@ -28,47 +28,47 @@
       min-height: 100vh;
       display: grid;
       place-items: center;
-      background:
-        radial-gradient(circle at 0% 0%, rgba(34, 211, 238, 0.25), transparent 45%),
-        radial-gradient(circle at 100% 100%, rgba(20, 184, 166, 0.2), transparent 40%),
-        linear-gradient(135deg, var(--bg-1), var(--bg-2));
       color: var(--text);
       padding: 24px;
+      background:
+        radial-gradient(circle at 10% 5%, rgba(34, 211, 238, 0.25), transparent 45%),
+        radial-gradient(circle at 90% 95%, rgba(20, 184, 166, 0.22), transparent 40%),
+        linear-gradient(145deg, var(--bg-1), var(--bg-2));
     }
 
     .converter-card {
-      width: min(900px, 100%);
-      border-radius: 20px;
-      padding: 30px;
+      width: min(920px, 100%);
       background: var(--card);
       backdrop-filter: blur(8px);
-      border: 1px solid rgba(148, 163, 184, 0.25);
-      box-shadow: 0 24px 50px rgba(2, 6, 23, 0.45);
+      border-radius: 20px;
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      box-shadow: 0 24px 50px rgba(2, 6, 23, 0.42);
+      padding: 30px;
     }
 
     .title {
-      font-size: clamp(1.5rem, 2vw + 1rem, 2.3rem);
+      font-size: clamp(1.4rem, 2vw + 1rem, 2.25rem);
       font-weight: 800;
-      letter-spacing: 0.3px;
       margin-bottom: 8px;
+      letter-spacing: 0.3px;
     }
 
     .subtitle {
       color: var(--muted);
-      margin-bottom: 24px;
+      margin-bottom: 22px;
       font-size: 0.98rem;
     }
 
     .converter-row {
       display: grid;
-      grid-template-columns: repeat(3, minmax(160px, 1fr));
+      grid-template-columns: repeat(3, minmax(170px, 1fr));
       gap: 16px;
     }
 
     .col {
-      background: var(--field-bg);
-      border: 1px solid rgba(148, 163, 184, 0.2);
+      background: var(--surface);
       border-radius: 14px;
+      border: 1px solid rgba(148, 163, 184, 0.18);
       padding: 16px;
       transition: transform 0.2s ease, border-color 0.2s ease;
     }
@@ -82,18 +82,17 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      color: var(--text);
-      font-size: 0.95rem;
-      margin-bottom: 10px;
       font-weight: 600;
+      margin-bottom: 10px;
+      font-size: 0.95rem;
     }
 
     .unit-chip {
+      border-radius: 999px;
       font-size: 0.75rem;
       color: var(--accent);
-      background: rgba(34, 211, 238, 0.14);
       border: 1px solid rgba(34, 211, 238, 0.35);
-      border-radius: 999px;
+      background: rgba(34, 211, 238, 0.14);
       padding: 4px 8px;
     }
 
@@ -102,11 +101,11 @@
       height: 44px;
       border-radius: 10px;
       border: 1px solid rgba(148, 163, 184, 0.35);
-      background: rgba(15, 23, 42, 0.6);
+      background: rgba(15, 23, 42, 0.58);
       color: #f8fafc;
-      padding: 0 12px;
       font-size: 1rem;
       font-weight: 600;
+      padding: 0 12px;
       outline: none;
       transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
@@ -121,10 +120,22 @@
       box-shadow: 0 0 0 4px var(--ring);
     }
 
-    .footer-note {
+    .meta-row {
       margin-top: 18px;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      font-size: 0.86rem;
+    }
+
+    .footer-note {
       color: var(--muted);
-      font-size: 0.85rem;
+    }
+
+    .error-note {
+      color: var(--danger);
+      min-height: 1.2em;
     }
 
     @media (max-width: 768px) {
@@ -139,74 +150,101 @@
   </style>
 </head>
 <body>
-  <main class="converter-card">
+  <main class="converter-card" aria-label="Temperature converter">
     <h1 class="title">Temperature Converter</h1>
-    <p class="subtitle">Instantly convert between Celsius, Fahrenheit, and Kelvin.</p>
+    <p class="subtitle">Convert instantly between Celsius, Fahrenheit, and Kelvin.</p>
 
     <section class="converter-row">
       <div class="col">
         <label class="field-label" for="fahrenheit">Fahrenheit <span class="unit-chip">°F</span></label>
-        <input type="number" id="fahrenheit" placeholder="Enter Fahrenheit" />
+        <input type="number" id="fahrenheit" placeholder="Enter Fahrenheit" step="any" />
       </div>
 
       <div class="col">
         <label class="field-label" for="celsius">Celsius <span class="unit-chip">°C</span></label>
-        <input type="number" id="celsius" placeholder="Enter Celsius" />
+        <input type="number" id="celsius" placeholder="Enter Celsius" step="any" />
       </div>
 
       <div class="col">
         <label class="field-label" for="kelvin">Kelvin <span class="unit-chip">K</span></label>
-        <input type="number" id="kelvin" placeholder="Enter Kelvin" />
+        <input type="number" id="kelvin" placeholder="Enter Kelvin" step="any" />
       </div>
     </section>
 
-    <p class="footer-note">Tip: clear any input to reset all fields.</p>
+    <div class="meta-row">
+      <p class="footer-note">Tip: clear any field to reset all values.</p>
+      <p id="error-message" class="error-note" aria-live="polite"></p>
+    </div>
   </main>
 
   <script>
     const celsius = document.getElementById("celsius");
     const fahrenheit = document.getElementById("fahrenheit");
     const kelvin = document.getElementById("kelvin");
+    const errorMessage = document.getElementById("error-message");
 
     function roundToTwo(value) {
       return Number(value.toFixed(2));
+    }
+
+    function clearError() {
+      errorMessage.textContent = "";
+    }
+
+    function showError(message) {
+      errorMessage.textContent = message;
     }
 
     function resetFields() {
       celsius.value = "";
       fahrenheit.value = "";
       kelvin.value = "";
+      clearError();
+    }
+
+    function parseInput(source) {
+      if (source.value.trim() === "") {
+        resetFields();
+        return null;
+      }
+
+      const value = Number.parseFloat(source.value);
+
+      if (Number.isNaN(value)) {
+        showError("Please enter a valid number.");
+        return null;
+      }
+
+      clearError();
+      return value;
     }
 
     celsius.oninput = function () {
-      if (celsius.value === "") {
-        resetFields();
-        return;
-      }
+      const c = parseInput(celsius);
+      if (c === null) return;
 
-      const c = parseFloat(celsius.value);
       fahrenheit.value = roundToTwo((c * 9) / 5 + 32);
       kelvin.value = roundToTwo(c + 273.15);
     };
 
     fahrenheit.oninput = function () {
-      if (fahrenheit.value === "") {
-        resetFields();
-        return;
-      }
+      const f = parseInput(fahrenheit);
+      if (f === null) return;
 
-      const f = parseFloat(fahrenheit.value);
       celsius.value = roundToTwo(((f - 32) * 5) / 9);
       kelvin.value = roundToTwo(((f - 32) * 5) / 9 + 273.15);
     };
 
     kelvin.oninput = function () {
-      if (kelvin.value === "") {
-        resetFields();
+      const k = parseInput(kelvin);
+      if (k === null) return;
+
+      if (k < 0) {
+        showError("Kelvin cannot be below 0.");
         return;
       }
 
-      const k = parseFloat(kelvin.value);
+      clearError();
       fahrenheit.value = roundToTwo(((k - 273.15) * 9) / 5 + 32);
       celsius.value = roundToTwo(k - 273.15);
     };
